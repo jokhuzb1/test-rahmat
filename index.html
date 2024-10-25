@@ -1,0 +1,1541 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rahmat - оплата счета и чаевых в ресторанах и кафе</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.10/base.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.3.1/framer-motion.umd.js"></script>
+  <link rel="stylesheet" href="./styles/navbar.css">
+  <link rel="stylesheet" href="./styles/button.css">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./output.css">
+  <link rel="stylesheet" href="./styles/home.css">
+</head>
+<body>
+
+<div id="snackbar" data-key="snackbarText">
+  ✅ Sent successfully
+</div>
+
+<h1 class="counter">0</h1>
+<div class="overlay">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</div>
+
+<div class="absolute w-full top-0 left-0 navbar z-[200]">
+  <div class="container">
+    <div class="flex justify-between items-start mt-[37px] max-md:mt-[20px]">
+      <img src="/assets/logo.svg" alt="Logo" class="logo"/>
+      <div class="flex items-start">
+        <div class="nav-links-drop-down max-lg:!hidden">
+          <button class="dropdown-button dropdownButton max-lg:hidden" data-key="projects">
+            Projects.
+            <img
+               src="/assets/icons/chevron-down-icon.svg"
+               alt="Chevron Down"
+               class="chevron chevronIcon"
+            >
+          </button>
+        </div>
+        <ul class="nav-links mr-[134px] max-lg:!hidden">
+          <li><a href="/" class="text-[#888888] text-[14px] leading-[18px] active" data-key="projects"></a></li>
+          <li><a href="/" class="text-[#888888] text-[14px] leading-[18px]" data-key="payments"></a></li>
+          <li><a href="/" class="text-[#888888] text-[14px] leading-[18px]" data-key="onlineMenu"></a></li>
+          <li><a href="/" class="text-[#888888] text-[14px] leading-[18px]" data-key="delivery"></a></li>
+        </ul>
+        <div class="flex items-center gap-[20px] mr-[60px] nav-buttons max-lg:hidden">
+          <button class="dropdown-button dropdownButton">
+            <span data-key="rahmatBusiness">Rahmat business</span>
+            <img
+               src="/assets/icons/chevron-down-icon.svg"
+               alt="Chevron Down"
+               class="chevron chevronIcon"
+            >
+          </button>
+          <a href="#contact-us">
+            <button class="btn" data-key="becomePartner">
+              Become a partner
+            </button>
+          </a>
+        </div>
+        <div class="flex items-center gap-[20px]">
+          <button class="dropdown-button dropdownButton relative">
+            <span data-key="language">En</span>
+            <img
+               src="/assets/icons/chevron-down-icon.svg"
+               alt="Chevron Down"
+               class="chevron chevronIcon"
+            >
+            <div>
+              <span class="lang-btn" data-lang="en">English</span>
+              <span class="lang-btn" data-lang="ru">Русский</span>
+              <span class="lang-btn" data-lang="uz">O'zbekcha</span>
+            </div>
+          </button>
+          <button class="burger-icon">
+            <img src="/assets/icons/burger-icon.svg" alt="Burger Icon">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-menu overflow-hidden fixed z-[200]">
+  <div class="flex items-center justify-between">
+    <h2 class="text-[24px] text-[#010101] max-sm:text-[20px]" data-key="menu">Menu</h2>
+    <button class="menu-close-icon">
+      <img src="./assets/icons/close-icon.svg" alt="img"/>
+    </button>
+  </div>
+  <div class="menu-links flex flex-col gap-[2px] mt-[30px]">
+    <a href="#how-it-works" class="flex hover:text-[#F05039] transition items-center gap-[20px]">
+      <span class="text-[16px] relative top-[-6px] max-sm:top-[1px]">01</span>
+      <span class="text-[40px] max-sm:text-[25px]" data-key="howItWorks">How it works</span>
+    </a>
+    <a href="#advantages" class="flex hover:text-[#F05039] transition items-center gap-[20px]">
+      <span class="text-[16px] relative top-[-6px] max-sm:top-[1px]">02</span>
+      <span class="text-[40px] max-sm:text-[25px]" data-key="advantages">Advantages</span>
+    </a>
+    <a href="#pos-systems" class="flex hover:text-[#F05039] transition items-center gap-[20px]">
+      <span class="text-[16px] relative top-[-6px] max-sm:top-[1px]">03</span>
+      <span class="text-[40px] max-sm:text-[25px]" data-key="posSystems">POS-Systems</span>
+    </a>
+    <a href="#partners" class="flex hover:text-[#F05039] transition items-center gap-[20px]">
+      <span class="text-[16px] relative top-[-6px] max-sm:top-[1px]">04</span>
+      <span class="text-[40px] max-sm:text-[25px]" data-key="partners">Partners</span>
+    </a>
+    <a href="#faq" class="flex hover:text-[#F05039] transition items-center gap-[20px]">
+      <span class="text-[16px] relative top-[-6px] max-sm:top-[1px]">05</span>
+      <span class="text-[40px] max-sm:text-[25px]" data-key="faq">FAQ</span>
+    </a>
+  </div>
+  <h3 class="text-[40px] max-sm:text-[20px] pl-[36px] max-sm:pl-0 mt-[36px] pop-up-animation"
+      data-key="rahmatBusiness">Rahmat business</h3>
+  <div class="flex items-center gap-[32px] pl-[36px] max-sm:pl-0 mt-[20px] question-links">
+    <a href="#how-it-works" class="text-[24px] max-sm:text-[16px] transition hover:text-[#F05039] pop-up-animation"
+       data-key="howItWorks">How
+      it works</a>
+    <a href="#advantages" class="text-[24px] max-sm:text-[16px] transition hover:text-[#F05039] pop-up-animation"
+       data-key="advantages">Advantages</a>
+    <a href="#faq" class="text-[24px] max-sm:text-[16px] transition hover:text-[#F05039] pop-up-animation"
+       data-key="faq">FAQ</a>
+  </div>
+  <div
+     class="flex justify-between items-center mt-[50px] max-sm:flex-col max-sm:items-start max-sm:gap-[20px] max-sm:mt-[40px]">
+    <a href="#contact-us">
+      <button class="btn big pop-up-animation" data-key="becomePartner">Become a partner</button>
+    </a>
+    <div class="flex items-center gap-[20px] social-links">
+      <button class="icon-btn white">
+        <img src="./assets/icons/facebook-icon.svg" alt="Facebook">
+      </button>
+      <button class="icon-btn white">
+        <img src="./assets/icons/twitter-icon.svg" alt="Twitter">
+      </button>
+      <button class="icon-btn white">
+        <img src="./assets/icons/instagram-icon.svg" alt="Instagram">
+      </button>
+    </div>
+  </div>
+</div>
+<div class="max-lg:hidden">
+  <div class="absolute left-0 top-[280px] w-max flex items-center">
+    <img src="./assets/icons/header-img-left-1.svg" alt="Illustration" class="header-img-1">
+    <img src="./assets/icons/header-img-left-2.svg" alt="Illustration" class="header-img-2">
+    <img src="./assets/icons/header-img-left-3.svg" alt="Illustration" class="header-img-3">
+  </div>
+</div>
+<div class="container static showcase-section relative">
+  <div class="flex items-center justify-between flex-col" style="height: 100vh;">
+    <div class="flex items-center justify-end w-full max-lg:flex-col max-lg:justify-center" style="height: 100%;">
+      <h1
+         class="text-[58px] max-w-[474px] mr-[200px] z-[2] header-text max-lg:text-center max-lg:max-w-full max-lg:mr-0 max-md:text-[40px] max-sm:text-[30px]"
+         data-key="headerTitle"
+      >
+        Pay the Bill, Leave Reviews and Tips via QR Code Now!
+      </h1>
+      <div class="hidden max-lg:block">
+        <a href="#contact-us">
+          <button class="btn big pop-up-animation relative top-[40px] max-sm:top-[80px]" data-key="becomePartner">Become a
+            partner
+          </button>
+        </a>
+        <div class="flex justify-center">
+          <img src="./assets/icons/showcase-bottom-illustrator.svg" alt="showcase" class="absolute bottom-0"/>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-between items-center w-full mb-[30px] max-lg:justify-end">
+      <div class="flex items-center gap-[20px] header-social-links max-lg:hidden">
+        <button class="icon-btn white">
+          <img src="./assets/icons/facebook-icon.svg" alt="Facebook">
+        </button>
+        <button class="icon-btn white">
+          <img src="./assets/icons/twitter-icon.svg" alt="Twitter">
+        </button>
+        <button class="icon-btn white">
+          <img src="./assets/icons/instagram-icon.svg" alt="Instagram">
+        </button>
+      </div>
+      <a href="#contact-us">
+        <button class="btn big dark contact-us-btn max-lg:hidden" data-key="contactUs">
+          Contact us
+        </button>
+      </a>
+      <div class="flex items-center gap-[8px] explore-btn">
+        <span class="text-[16px] font-[500] max-sm:hidden" data-key="explore">Explore</span>
+        <button class="icon-btn scroll-down-button" id="toDownBtn">
+          <img src="./assets/icons/arrow-down-icon.svg" alt="Arrow Down">
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="max-lg:hidden hero-section h-[100vh] relative flex items-center justify-center">
+  <div class="right-illustrator transition illustration">
+    <img src="./assets/icons/showcase-right-illustrator.svg" alt="Right Illustrator">
+  </div>
+  <img src="/assets/payment-images/img_0.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-0 fixed">
+  <img src="/assets/payment-images/img_1.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-1 fixed">
+  <img src="/assets/payment-images/img_2.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-2 fixed">
+  <img src="/assets/payment-images/img_3.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-3 fixed">
+  <img src="/assets/payment-images/img_4.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-4 fixed">
+  <img src="/assets/payment-images/img_5.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-5 fixed">
+  <img src="/assets/payment-images/img_6.png" alt="animated payment img"
+       class="img-payment w-[270px] z-[99] img-6 fixed">
+  <img src="/assets/phone.png" alt="animated phone"
+       class="phone-image w-[270px] rotate-[90deg] absolute z-[99] transition">
+
+  <div class="left-illustrator transition illustration">
+    <img src="./assets/icons/showcase-left-illustrator.svg" alt="Left Illustrator">
+  </div>
+</div>
+<div id="how-it-works"></div>
+<div class="max-lg:hidden h-[550vh] max-[1280px]:h-[650vh]"></div>
+<div class="h-[450vh] max-[1023px]:hidden">
+  <div class="container">
+    <section id="section2" class="first relative">
+      <div class="full fullpage1 z-[5]">
+        <div class="postcontainer">
+          <div class="flex flex-col justify-between items-center w-full">
+            <img src="./assets/gifs/phone.gif" alt="phone" class="w-[250px] mt-[100px] max-[1300px]:w-[200px]"/>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between items-center w-full h-[100vh] z-[2] absolute top-0">
+        <div class="flex items-center justify-between w-full max-md:hidden">
+          <p class="section-title !text-[#000]" data-key="scanQr">Scan QR-code</p>
+          <h2 class="text-[#000] text-center text-[25px] relative top-[50px] left-[-50px]" data-key="scanQrHeading">
+            Scan the QR-code <br /> to <span class="text-[#888888]">Pay Securely</span>
+          </h2>
+          <h2 class="text-[50px]" data-key="section01">01</h2>
+        </div>
+        <div class="flex items-center justify-between w-full max-md:justify-center">
+          <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="scanQrHeading">
+            Scan the QR-code <br /> to <span class="text-[#888888]">Pay Securely</span>
+          </h2>
+          <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]" data-key="scanQrInstruction">
+            Simply point your phone's camera at the QR code to scan and complete your payment instantly. Enjoy a fast, secure, and hassle-free transaction experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between items-center w-full h-[100vh] z-[2] absolute top-[110vh]">
+        <div class="flex items-center justify-between w-full max-md:hidden sticky top-0">
+          <p class="section-title !text-[#000]" data-key="payment">Payment</p>
+          <h2 class="text-[#000] text-center text-[25px] relative top-[50px] left-[-50px]" data-key="paymentHeading">
+            Guests can <span class="text-[#888888]">pay their <br /> bill easily</span> via QR scan!
+          </h2>
+          <h2 class="text-[50px]" data-key="section02">02</h2>
+        </div>
+        <div class="flex items-center justify-between w-full max-md:justify-center">
+          <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="paymentHeading">
+            Guests can <span class="text-[#888888]">pay their <br /> bill easily</span> via QR scan!
+          </h2>
+          <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]" data-key="paymentInstruction">
+            Just scan the QR code RAHMAT and choose a payment method!
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between items-center w-full h-[100vh] z-[2] absolute top-[220vh]">
+        <div class="flex items-center justify-between w-full max-md:hidden">
+          <p class="section-title !text-[#000]" data-key="gratuities">Gratuities</p>
+          <h2 class="text-[#000] text-center text-[25px] relative top-[50px] left-[-50px]" data-key="gratuitiesHeading">
+            <span class="text-[#888888]">Seamless</span> Service <br /> and Easy Get Tipping!
+          </h2>
+          <h2 class="text-[50px]" data-key="section03">03</h2>
+        </div>
+        <div class="flex items-center justify-between w-full max-md:justify-center">
+          <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="gratuitiesHeading">
+            <span class="text-[#888888]">Seamless</span> Service <br /> and Easy Get Tipping!
+          </h2>
+          <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]" data-key="gratuitiesInstruction">
+            If you are satisfied with your service, the guest can pay the bill and leave a tip in one action. Easily and quickly directly to the waiter's bill!
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between items-center w-full h-[100vh] z-[2] absolute top-[330vh]">
+        <div class="flex items-center justify-between w-full max-md:hidden">
+          <p class="section-title !text-[#000]" data-key="reviews">Reviews</p>
+          <h2 class="text-[#000] text-center text-[25px] relative top-[50px] left-[-50px]" data-key="reviewsHeading">
+            Real-Time <br /> Guest <span class="text-[#888888]">Feedback!</span>
+          </h2>
+          <h2 class="text-[50px]" data-key="section04">04</h2>
+        </div>
+        <div class="flex items-center justify-between w-full max-md:justify-center">
+          <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="reviewsHeading">
+            Real-Time <br /> Guest <span class="text-[#888888]">Feedback!</span>
+          </h2>
+          <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]" data-key="reviewsInstruction">
+            The establishment can receive honest and relevant reviews about the service provided. The guest can leave an emotional review by choosing one of the emotions, or write a message that the management of the establishment will see instantly.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="hidden max-lg:block relative mt-[20px]">
+  <div class="container">
+    <div class="flex justify-center">
+      <img
+         src="/assets/payment-images/img_0.png"
+         alt="animated payment img"
+         class="w-[177px] z-[99] absolute top-[50px] left-[-70px]"
+      >
+      <img
+         src="/assets/payment-images/img_1.png"
+         alt="animated payment img"
+         class="w-[177px] z-[1] absolute top-[160px] left-[-20px]"
+      >
+      <img
+         src="/assets/payment-images/img_2.png"
+         alt="animated payment img"
+         class="w-[177px] z-[1] absolute top-[290px] left-[-100px]"
+      >
+      <img
+         src="/assets/payment-images/img_3.png"
+         alt="animated payment img"
+         class="w-[177px] z-[1] absolute top-[20px] right-[-85px]"
+      >
+      <img
+         src="/assets/payment-images/img_4.png"
+         alt="animated payment img"
+         class="w-[177px] z-[1] absolute top-[140px] right-[-100px]"
+      >
+      <img
+         src="/assets/payment-images/img_5.png"
+         alt="animated payment img"
+         class="w-[177px] z-[1] absolute top-[245px] right-[-100px]"
+      >
+      <img
+         src="/assets/payment-images/img_6.png"
+         alt="animated payment img"
+         class="w-[177px] z-[1] absolute top-[360px] right-[-40px]"
+      >
+      <img
+         src="/assets/phone.png"
+         alt="phone"
+         class="animated phone z-[100] relative w-[180px]"
+      >
+    </div>
+  </div>
+</div>
+<div class="hidden horizontal-scroll mt-[20px]">
+  <div class="container">
+    <div id="phone-11" class="phone-item flex flex-col justify-center items-center w-full h-[100vh] mb-[150px]">
+      <div class="flex items-center justify-between w-full max-md:hidden">
+        <p class="section-title !text-[#000]" data-key="scanQr">Scan QR-code</p>
+        <h2 class="text-[50px]" data-key="section01">01</h2>
+      </div>
+      <h2 class="text-[#000] text-center text-[25px]" data-key="scanQrHeading">
+        Scan the QR-code <br/> to <span class="text-[#888888]" data-key="paySecurely">Pay Securely</span>
+      </h2>
+      <img src="./assets/gifs/phone_1.gif" alt="phone" class="w-[150px] my-[10px]" />
+      <div class="flex items-center justify-between w-full max-md:justify-center">
+        <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="scanQrHeading">
+          Scan the QR-code <br/> to <span class="text-[#888888]" data-key="paySecurely">Pay Securely</span>
+        </h2>
+        <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full px-[20px] max-md:mt-[20px]" data-key="scanQrInstruction">
+          Simply point your phone's camera at the QR code to scan and complete your payment instantly. Enjoy a fast, secure, and hassle-free transaction experience.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="phone-22" class="phone-item flex flex-col justify-center items-center w-full h-[100vh] mb-[150px]">
+      <div class="flex items-center justify-between w-full max-md:hidden sticky top-0">
+        <p class="section-title !text-[#000]" data-key="payment">Payment</p>
+        <h2 class="text-[50px]" data-key="section02">02</h2>
+      </div>
+      <h2 class="text-[#000] text-center text-[25px]" data-key="paymentHeading">
+        Guests can <span class="text-[#888888]">pay their <br/> bill easily</span> via QR scan!
+      </h2>
+      <img src="./assets/gifs/phone_1.gif" alt="phone" class="w-[150px] my-[10px]" />
+      <div class="flex items-center justify-between w-full max-md:justify-center">
+        <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="paymentHeading">
+          Guests can <span class="text-[#888888]">pay their <br/> bill easily</span> via QR scan!
+        </h2>
+        <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full px-[20px] max-md:mt-[20px]" data-key="paymentInstruction">
+          Just scan the QR code RAHMAT and choose a payment method!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="phone-33" class="phone-item flex flex-col justify-center items-center w-full h-[100vh] mb-[150px]">
+      <div class="flex items-center justify-between w-full max-md:hidden">
+        <p class="section-title !text-[#000]" data-key="gratuities">Gratuities</p>
+        <h2 class="text-[50px]" data-key="section03">03</h2>
+      </div>
+      <h2 class="text-[#000] text-center text-[25px]" data-key="gratuitiesHeading">
+        <span class="text-[#888888]">Seamless</span> Service <br/> and Easy Get Tipping!
+      </h2>
+      <img src="./assets/gifs/phone_2.gif" alt="phone" class="w-[150px] my-[10px]" />
+      <div class="flex items-center justify-between w-full max-md:justify-center">
+        <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="gratuitiesHeading">
+          <span class="text-[#888888]">Seamless</span> Service <br/> and Easy Get Tipping!
+        </h2>
+        <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full px-[20px] max-md:mt-[20px]" data-key="gratuitiesInstruction">
+          If you are satisfied with your service, the guest can pay the bill and leave a tip in one action. Easily and quickly directly to the waiter's bill!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="phone-44" class="phone-item flex flex-col justify-center items-center w-full h-[100vh] mb-[150px]">
+      <div class="flex items-center justify-between w-full max-md:hidden">
+        <p class="section-title !text-[#000]" data-key="reviews">Reviews</p>
+        <h2 class="text-[50px]" data-key="section04">04</h2>
+      </div>
+      <h2 class="text-[#000] text-center text-[25px]" data-key="reviewsHeading">
+        Real-Time <br/>
+        Guest <span class="text-[#888888]">Feedback!</span>
+      </h2>
+      <img src="./assets/gifs/phone_3.gif" alt="phone" class="w-[150px] my-[10px]" />
+      <div class="flex items-center justify-between w-full max-md:justify-center">
+        <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden" data-key="reviewsHeading">
+          Real-Time <br/>
+          Guest <span class="text-[#888888]">Feedback!</span>
+        </h2>
+        <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full px-[20px] max-md:mt-[20px]" data-key="reviewsInstruction">
+          The establishment can receive honest and relevant reviews about the service provided. The guest can leave an emotional review by choosing one of the emotions, or write a message that the management of the establishment will see instantly.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="container">
+  <div id="phone-1" class="flex flex-col justify-between items-center w-full h-[100vh] mb-[150px]">
+    <div class="flex items-center justify-between w-full max-md:hidden">
+      <p class="section-title !text-[#000]">Scan QR-code</p>
+      <h2 class="text-[50px]">01</h2>
+    </div>
+    <h2 class="text-[#000] text-center text-[25px]">
+      Scan the QR-code <br/> to <span class="text-[#888888]">Pay Securely</span>
+    </h2>
+    <img src="./assets/gifs/phone_1.gif" alt="phone" class="w-[250px]"/>
+    <div class="flex items-center justify-between w-full max-md:justify-center">
+      <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden">
+        Scan the QR-code <br/> to <span class="text-[#888888]">Pay Securely</span>
+      </h2>
+      <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]">
+        Simply point your phone's camera at the QR code to scan and complete your payment instantly. Enjoy a fast,
+        secure, and hassle-free transaction experience.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div id="phone-2" class="flex flex-col justify-between items-center w-full h-[100vh] mb-[150px]">
+    <div class="flex items-center justify-between w-full max-md:hidden sticky top-0">
+      <p class="section-title !text-[#000]">Payment</p>
+      <h2 class="text-[50px]">02</h2>
+    </div>
+    <h2 class="text-[#000] text-center text-[25px]">
+      Guests can <span class="text-[#888888]">pay their <br/> bill easily</span> via QR scan!
+    </h2>
+    <img src="./assets/gifs/phone_1.gif" alt="phone" class="w-[250px]"/>
+    <div class="flex items-center justify-between w-full max-md:justify-center">
+      <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden">
+        Guests can <span class="text-[#888888]">pay their <br/> bill easily</span> via QR scan!
+      </h2>
+      <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]">
+        Just scan the QR code RAHMAT and choose a payment method!
+      </p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div id="phone-3" class="flex flex-col justify-between items-center w-full h-[100vh] mb-[150px]">
+    <div class="flex items-center justify-between w-full max-md:hidden">
+      <p class="section-title !text-[#000]">Gratuities</p>
+      <h2 class="text-[50px]">03</h2>
+    </div>
+    <h2 class="text-[#000] text-center text-[25px]">
+      <span class="text-[#888888]">Seamless</span> Service <br/> and Easy Get Tipping!
+    </h2>
+    <img src="./assets/gifs/phone_2.gif" alt="phone" class="w-[250px]"/>
+    <div class="flex items-center justify-between w-full max-md:justify-center">
+      <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden">
+        <span class="text-[#888888]">Seamless</span> Service <br/> and Easy Get Tipping!
+      </h2>
+      <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]">
+        If you are satisfied with your service, the guest can pay the bill and leave a tip in one action. Easily and
+        quickly directly to the waiter's bill!
+      </p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div id="phone-4" class="flex flex-col justify-between items-center w-full h-[100vh] mb-[150px]">
+    <div class="flex items-center justify-between w-full max-md:hidden">
+      <p class="section-title !text-[#000]">Reviews</p>
+      <h2 class="text-[50px]">04</h2>
+    </div>
+    <h2 class="text-[#000] text-center text-[25px]">
+      Real-Time <br/>
+      Guest <span class="text-[#888888]">Feedback!</span>
+    </h2>
+    <img src="./assets/gifs/phone_3.gif" alt="phone" class="w-[250px]"/>
+    <div class="flex items-center justify-between w-full max-md:justify-center">
+      <h2 class="text-[#000] text-[50px] max-lg:text-[30px] max-md:hidden">
+        Real-Time <br/>
+        Guest <span class="text-[#888888]">Feedback!</span>
+      </h2>
+      <p class="text-[16px] text-right max-w-[275px] max-md:text-center max-md:max-w-full max-md:mt-[20px]">
+        The establishment can receive honest and relevant reviews about the service provided. The guest can leave an
+        emotional review by choosing one of the emotions, or write a message that the management of the establishment
+        will see instantly.
+      </p>
+    </div>
+  </div>
+</div> -->
+
+<!--Advantages-->
+
+<div id="advantages"></div>
+<div class="bg-[#010101] h-full max-lg:hidden">
+  <div class="px-[20px]">
+    <div class="advantages-section">
+      <div class="advantages-left relative">
+        <!-- Add data-key for translation -->
+        <p class="section-title top-[60px] absolute" data-key="advantagesTitle">Advantages</p>
+        <div class="w-full h-full flex justify-center items-center relative">
+          <video
+             class="absolute w-[360px] h-[360px] !touch-none"
+             autoplay muted loop playsinline webkit-playsinline
+          >
+            <source src="/assets/gifs/advantages-text-bg.mp4" type="video/mp4">
+          </video>
+          <div class="flex items-center z-[2]">
+            <!-- Add data-key for translation -->
+            <h2 class="text-[50px] text-[#fff]" data-key="advantagesFor">For</h2>
+            <div class="flex flex-col ml-[20px] h-[65px] relative overflow-hidden">
+              <!-- Add data-key for dynamic business, employees, and customers text -->
+              <span class="text-[#fff] text-[50px] relative" data-key="forBusiness">business</span>
+              <span class="text-[#fff] text-[50px] relative" data-key="forEmployees">employees</span>
+              <span class="text-[#fff] text-[50px] relative" data-key="forCustomers">customers</span>
+            </div>
+          </div>
+        </div>
+        <button class="absolute bottom-[60px] active:scale-[.95]" id="scrollToNextButton">
+          <img
+             src="./assets/icons/to-down-icon.svg"
+             alt="to down"
+          >
+        </button>
+      </div>
+
+      <div class="advantages-right">
+        <div class="advantages-details-wrapper">
+          <div class="advantages-details bg-[#FFFFFF] rounded-[8px] w-full my-[20px] relative overflow-hidden">
+            <!-- Add data-key for translation -->
+            <h2 class="text-[25px] text-center mt-[40px]" data-key="advantage1">
+              Seamless <span class="text-[gray]">Integration</span> and <br/> Fast Payments!
+            </h2>
+            <video
+               class="max-w-[483px] mt-[20px] !touch-none"
+               autoplay muted loop playsinline webkit-playsinline
+            >
+              <source src="./assets/gifs/integrations.mp4" type="video/mp4">
+            </video>
+            <div class="h-[146px]"></div>
+            <img
+               src="./assets/icons/showcase-left-illustrator.svg"
+               alt="down-illustrator"
+               class="absolute rotate-[-90deg] bottom-[-180px]"
+            >
+          </div>
+
+          <div class="advantages-details bg-[#FFFFFF] rounded-[8px] w-full my-[20px] relative overflow-hidden">
+            <!-- Add data-key for translation -->
+            <h2 class="text-[25px] text-center mt-[40px]" data-key="advantage2">
+              Instant Tips, Feedback, and <br/> Analytics for <span class="text-[gray]">Waitstaff!</span>
+            </h2>
+            <video
+               class="max-w-[483px] mt-[20px] !touch-none"
+               autoplay muted loop playsinline webkit-playsinline
+            >
+              <source src="./assets/gifs/analytics.mp4" type="video/mp4">
+            </video>
+            <div class="h-[146px]"></div>
+            <img
+               src="./assets/icons/showcase-left-illustrator.svg"
+               alt="down-illustrator"
+               class="absolute rotate-[-90deg] bottom-[-180px]"
+            >
+          </div>
+
+          <div class="advantages-details bg-[#FFFFFF] rounded-[8px] w-full my-[20px] relative overflow-hidden">
+            <!-- Add data-key for translation -->
+            <h2 class="text-[25px] text-center mt-[40px]" data-key="advantage3">
+              Easy and <span class="text-[gray]">Quick Payments</span>, Tips, <br/> and Reviews with RAHMAT!
+            </h2>
+            <video
+               class="max-w-[483px] mt-[20px] !touch-none"
+               autoplay muted loop playsinline webkit-playsinline
+            >
+              <source src="./assets/gifs/integration.mp4" type="video/mp4">
+            </video>
+            <div class="h-[146px]"></div>
+            <img
+               src="./assets/icons/showcase-left-illustrator.svg"
+               alt="down-illustrator"
+               class="absolute rotate-[-90deg] bottom-[-180px]"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hidden mt-[150px]">
+  <div class="advantages-scroll relative">
+    <div class="advantages-item bg-[#010101] w-full h-[100vh] rounded-[16px] py-[20px]">
+      <div class="container">
+        <div class="flex justify-between items-center flex-col h-[90vh]">
+          <p class="section-title" data-key="advantages">Advantages</p>
+          <div class="w-full">
+            <h2 class="text-[30px] text-[#fff] z-[2] relative text-center" data-key="forBusinessMobile">For business</h2>
+            <div class="flex justify-center">
+              <img
+                 src="/assets/gifs/advantages-text-bg.gif"
+                 alt="gif"
+                 class="absolute max-w-[360px] max-sm:w-full h-[250px] object-cover top-[30vh]"
+              />
+            </div>
+          </div>
+          <button class="active:scale-[.95] scrollToNextButtonMobile">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="advantages-item advantages-details h-[100vh] bg-[#FFFFFF] rounded-[8px] w-full mt-[20px] relative">
+      <h2 class="text-[25px] text-center mt-[40px] max-w-[250px]" data-key="advantage1">
+        Seamless <span class="text-[gray]">Integration</span> <br/> and Fast Payments!
+      </h2>
+      <video
+         class="max-w-[350px] mt-[20px] !touch-none"
+         autoplay muted loop playsinline webkit-playsinline
+      >
+        <source src="./assets/gifs/integrations.mp4" type="video/mp4">
+      </video>
+      <div class="h-[146px]"></div>
+      <img
+         src="./assets/icons/showcase-bottom-illustrator.svg"
+         alt="down-illustrator"
+         class="absolute bottom-0"
+      >
+    </div>
+    <div class="advantages-item bg-[#010101] w-full h-[100vh] rounded-[16px] py-[20px]">
+      <div class="container">
+        <div class="flex justify-between items-center flex-col h-[90vh]">
+          <p class="section-title" data-key="advantages">Advantages</p>
+          <div class="w-full">
+            <h2 class="text-[30px] text-[#fff] z-[2] relative text-center" data-key="forEmployeesMobile">For employees</h2>
+            <div class="flex justify-center">
+              <video
+                 class="absolute max-w-[360px] max-sm:w-full h-[250px] object-cover top-[30vh] !touch-none"
+                 autoplay muted loop playsinline webkit-playsinline
+              >
+                <source src="./assets/gifs/advantages-text-bg.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <button class="active:scale-[.95] scrollToNextButtonMobile">
+            <img
+               src="./assets/icons/to-down-icon.svg"
+               alt="to down"
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="advantages-item advantages-details h-[100vh] bg-[#FFFFFF] rounded-[8px] w-full mt-[20px] relative">
+      <h2 class="text-[25px] text-center mt-[40px] max-w-[250px]" data-key="advantage1">
+        Instant Tips, Feedback, and Analytics for <span class="text-[gray]">Waitstaff</span>!
+      </h2>
+      <video
+         class="max-w-[350px] mt-[20px] !touch-none"
+         autoplay muted loop playsinline webkit-playsinline
+      >
+        <source src="./assets/gifs/analytics.mp4" type="video/mp4">
+      </video>
+      <div class="h-[146px]"></div>
+      <img
+         src="./assets/icons/showcase-bottom-illustrator.svg"
+         alt="down-illustrator"
+         class="absolute bottom-0"
+      >
+    </div>
+    <div class="advantages-item bg-[#010101] w-full rounded-[16px] py-[20px]">
+      <div class="container">
+        <div class="flex justify-between items-center flex-col h-[90vh]">
+          <p class="section-title" data-key="advantages">Advantages</p>
+          <div class="w-full">
+            <h2 class="text-[30px] text-[#fff] z-[2] relative text-center" data-key="forCustomersMobile">For customers</h2>
+            <div class="flex justify-center">
+              <video
+                 class="absolute max-w-[360px] max-sm:w-full h-[250px] object-cover top-[30vh] !touch-none"
+                 autoplay muted loop playsinline webkit-playsinline
+              >
+                <source src="./assets/gifs/advantages-text-bg.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <button class="active:scale-[.95] scrollToNextButtonMobile">
+            <img
+               src="./assets/icons/to-down-icon.svg"
+               alt="to down"
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="advantages-item advantages-details h-[100vh] bg-[#FFFFFF] rounded-[8px] w-full my-[20px] relative">
+      <h2 class="text-[25px] text-center mt-[40px] max-w-[250px]" data-key="advantage1">
+        Easy and <span class="text-[gray]">Quick Payments</span>, Tips, and Reviews with RAHMAT!
+      </h2>
+      <video
+         class="max-w-[350px] mt-[20px] !touch-none"
+         autoplay muted loop playsinline webkit-playsinline
+      >
+        <source src="./assets/gifs/integration.mp4" type="video/mp4">
+      </video>
+      <div class="h-[146px]"></div>
+      <img
+         src="./assets/icons/showcase-bottom-illustrator.svg"
+         alt="down-illustrator"
+         class="absolute bottom-0"
+      >
+    </div>
+  </div>
+</div>
+<div class="hidden max-lg:block mt-[200px]">
+  <div class="relative advantages-1">
+    <div class="bg-[#010101] w-full rounded-[16px] py-[20px]">
+      <div class="container">
+        <div class="flex justify-between items-center flex-col h-[90vh]">
+          <p class="section-title">Advantages</p>
+          <div class="w-full">
+            <h2 class="text-[30px] text-[#fff] z-[2] relative text-center">For business</h2>
+            <div class="flex justify-center">
+              <img
+                 src="/assets/gifs/advantages-text-bg.gif"
+                 alt="gif"
+                 class="absolute max-w-[360px] max-sm:w-full h-[250px] object-cover top-[30vh]"
+              />
+            </div>
+          </div>
+          <button class="active:scale-[.95] scrollToNextButtonMobile">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="advantages-details bg-[#FFFFFF] rounded-[8px] w-full mt-[20px] relative">
+      <h2 class="text-[25px] text-center mt-[40px] max-w-[250px]" data-key="advantage1">
+        Seamless <span class="text-[gray]">Integration</span> <br/> and Fast Payments!
+      </h2>
+      <video
+         class="max-w-[350px] mt-[20px] !touch-none"
+         autoplay muted loop playsinline webkit-playsinline
+      >
+        <source src="./assets/gifs/integrations.mp4" type="video/mp4">
+      </video>
+      <div class="h-[146px]"></div>
+      <img
+         src="./assets/icons/showcase-bottom-illustrator.svg"
+         alt="down-illustrator"
+         class="absolute bottom-0"
+      >
+    </div>
+  </div>
+
+  <div class="relative advantages-2">
+    <div class="bg-[#010101] w-full rounded-[16px] py-[20px]">
+      <div class="container">
+        <div class="flex justify-between items-center flex-col h-[90vh]">
+          <p class="section-title">Advantages</p>
+          <div class="w-full">
+            <h2 class="text-[30px] text-[#fff] z-[2] relative text-center">For employees</h2>
+            <div class="flex justify-center">
+              <video
+                 class="absolute max-w-[360px] max-sm:w-full h-[250px] object-cover top-[30vh] !touch-none"
+                 autoplay muted loop playsinline webkit-playsinline
+              >
+                <source src="./assets/gifs/advantages-text-bg.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <button class="active:scale-[.95] scrollToNextButtonMobile">
+            <img
+               src="./assets/icons/to-down-icon.svg"
+               alt="to down"
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="advantages-details bg-[#FFFFFF] rounded-[8px] w-full mt-[20px]  relative">
+      <h2 class="text-[25px] text-center mt-[40px] max-w-[250px]" data-key="advantage1">
+        Instant Tips, Feedback, and Analytics for <span class="text-[gray]">Waitstaff</span>!
+      </h2>
+      <video
+         class="max-w-[350px] mt-[20px] !touch-none"
+         autoplay muted loop playsinline webkit-playsinline
+      >
+        <source src="./assets/gifs/analytics.mp4" type="video/mp4">
+      </video>
+      <div class="h-[146px]"></div>
+      <img
+         src="./assets/icons/showcase-bottom-illustrator.svg"
+         alt="down-illustrator"
+         class="absolute bottom-0"
+      >
+    </div>
+  </div>
+
+  <div class="relative advantages-3">
+    <div class="bg-[#010101] w-full rounded-[16px] py-[20px]">
+      <div class="container">
+        <div class="flex justify-between items-center flex-col h-[90vh]">
+          <p class="section-title">Advantages</p>
+          <div class="w-full">
+            <h2 class="text-[30px] text-[#fff] z-[2] relative text-center">For customers</h2>
+            <div class="flex justify-center">
+              <video
+                 class="absolute max-w-[360px] max-sm:w-full h-[250px] object-cover top-[30vh] !touch-none"
+                 autoplay muted loop playsinline webkit-playsinline
+              >
+                <source src="./assets/gifs/advantages-text-bg.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <button class="active:scale-[.95] scrollToNextButtonMobile">
+            <img
+               src="./assets/icons/to-down-icon.svg"
+               alt="to down"
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="advantages-details bg-[#FFFFFF] rounded-[8px] w-full my-[20px] relative">
+      <h2 class="text-[25px] text-center mt-[40px] max-w-[250px]" data-key="advantage1">
+        Easy and <span class="text-[gray]">Quick Payments</span>, Tips, and Reviews with RAHMAT!
+      </h2>
+      <video
+         class="max-w-[350px] mt-[20px] !touch-none"
+         autoplay muted loop playsinline webkit-playsinline
+      >
+        <source src="./assets/gifs/integration.mp4" type="video/mp4">
+      </video>
+      <div class="h-[146px]"></div>
+      <img
+         src="./assets/icons/showcase-bottom-illustrator.svg"
+         alt="down-illustrator"
+         class="absolute bottom-0"
+      >
+    </div>
+  </div>
+</div>
+
+<div class="container" id="pos-systems">
+  <div class="pos-system-section">
+    <div class="h-[100vh]">
+      <div class="flex justify-center items-center flex-col text-center font-[400] h-[100vh]">
+        <video
+           class="ellipse-gif fixed max-w-[550px] !touch-none max-lg:hidden"
+           autoplay muted loop playsinline webkit-playsinline
+        >
+          <source src="./assets/gifs/rmbg.mp4" type="video/mp4">
+        </video>
+        <video
+           class="absolute ellipse-gif-mobile !touch-none max-sm:top-[33vh] max-w-[550px] hidden max-lg:block max-md:max-w-[400px] max-sm:max-w-[235px]"
+           autoplay muted loop playsinline webkit-playsinline
+        >
+          <source src="./assets/gifs/rmbg.mp4" type="video/mp4">
+        </video>
+        <p class="section-title !text-[#000] min-w-[150px] pos-system-title" data-key="ourGoalTitle">Our goal</p>
+        <h3
+           class="pos-system-text max-w-[900px] text-[60px] mt-[30px] text-[#9F9F9FFF] max-lg:text-[40px] max-sm:text-[25px]"
+           data-key="ourGoalDescription"
+        >
+          Provide an easy and quick way to pay, tip, and leave feedback with just a QR code!
+        </h3>
+      </div>
+<!--      <div class="flex justify-center w-full sticky bottom-[20px] pos-system-section-to-down-button">-->
+<!--        <div class="z-[200] relative">-->
+<!--          <button class="btn icon-btn !min-w-[40px] !p-0">-->
+<!--            <img-->
+<!--               src="./assets/icons/arrow-down-icon.svg"-->
+<!--               alt="Arrow Down"-->
+<!--            >-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="section-with-ellipse relative">
+    <div class="h-[100vh] max-sm:h-[80vh]">
+      <div class="flex justify-between max-lg:justify-center">
+        <div class="w-[50%] max-lg:hidden"></div>
+        <div class="w-[50%] pos-system-right-content max-lg:!w-[100%]">
+          <div class="max-lg:flex max-lg:justify-center">
+            <p class="section-title !text-[#000] absolute pos-system-imgs-text left-0 opacity-0 max-lg:relative w-max"
+               data-key="posSystemsTitle">POS Systems</p>
+          </div>
+          <div class="max-sm:flex max-sm:justify-center">
+            <h2
+               class="text-[50px] mt-[30px] max-lg:text-center max-md:text-[35px] max-sm:text-[25px] max-sm:max-w-[235px]"
+               data-key="supportAllPos">We support all popular POS
+              systems</h2>
+          </div>
+          <p class="text-[16px] font-[500] max-lg:text-center mt-[40px] mb-[20px] pos-system-imgs-text"
+             data-key="integrationPlugIn">
+            Plug-in for integration with:</p>
+          <div class="grid grid-cols-2 gap-[20px] mb-[50px]">
+            <img src="./assets/integration-images/img_1.png" alt="integration-img-1"/>
+            <img src="./assets/integration-images/img_2.png" alt="integration-img-2"/>
+            <img src="./assets/integration-images/img_3.png" alt="integration-img-3"/>
+            <img src="./assets/integration-images/img_4.png" alt="integration-img-4"/>
+          </div>
+          <p class="text-[16px] font-[500] max-lg:text-center pos-system-last-text" data-key="partnerWithUs">Partner
+            with us to
+            effortlessly integrate with <br/> top POS systems</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="partners"></div>
+<div class="container relative partners-section-container">
+  <div class="partners-section">
+    <div class="h-[270vh]">
+      <div class="partners-images">
+        <div class="partners-card animated-card animated-card-1 absolute z-[3]">
+          <img
+             src="./assets/partners/img_1.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-2 absolute">
+          <img
+             src="./assets/partners/img_2.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-3 absolute">
+          <img
+             src="./assets/partners/img_3.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-4 absolute">
+          <img
+             src="./assets/partners/img_4.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-5 absolute">
+          <img
+             src="./assets/partners/img_5.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-6 absolute">
+          <img
+             src="./assets/partners/img_6.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-7 absolute">
+          <img
+             src="./assets/partners/img_7.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card animated-card animated-card-8 absolute">
+          <img
+             src="./assets/partners/img_8.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+      </div>
+      <div
+         class="flex justify-center items-center flex-col h-[100vh] mt-[100px] max-md:hidden max-sm:mt-[0] our-partners-title">
+        <p class="section-title !text-[black] partners-section-title" data-key="ourPartnersTitle">Our partners</p>
+        <h2 class="text-[50px] text-center mt-[40px] partners-title max-w-[800px] max-md:text-[35px] max-sm:text-[20px]"
+            data-key="ourPartnersDesc">
+          The city's favorite establishments are already with us!
+        </h2>
+      </div>
+      <div class="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-[15px] relative max-sm:top-[70px]">
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_1.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_2.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_3.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_4.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_5.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_6.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_7.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_8.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_9.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_10.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_11.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_12.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_13.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_14.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_15.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_16.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_18.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_19.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_20.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+        <div class="partners-card">
+          <img
+             src="./assets/partners/img_21.png"
+             alt="partner 1"
+             class="max-w-[200px]"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center w-full">
+    <div
+       class="flex justify-center items-center flex-col mt-[100px] fixed top-[8%] z-[-1] invisible transition our-partners-title-2">
+      <p class="section-title !text-[black]" data-key="ourPartnersTitle">Our partners</p>
+      <h2 class="text-[50px] text-center mt-[40px] partners-title max-w-[800px] max-md:text-[35px] max-sm:text-[20px]"
+          data-key="ourPartnersDesc">
+        The city's favorite establishments are already with us!
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="container hidden max-[768px]:block">
+  <div class="flex justify-center items-center flex-col mt-[100px] max-sm:mt-[50px]">
+    <p class="section-title !text-[black] mt-[30px]" data-key="ourPartnersTitle">Our partners</p>
+    <h2 class="text-[50px] text-center mt-[40px] partners-title max-w-[800px] max-md:text-[35px] max-sm:text-[20px]"
+        data-key="ourPartnersDesc">
+      The city's favorite establishments are already with us!
+    </h2>
+  </div>
+  <div class="grid grid-cols-4 max-lg:grid-cols-3 max-[350px]:grid-cols-2 gap-[15px] max-[768px]:mt-[40px]">
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_1.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_2.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_3.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_4.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_5.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_6.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_7.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_8.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_9.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_10.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_11.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_12.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_13.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_14.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_15.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_16.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_18.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_19.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_20.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+    <div class="partners-card">
+      <img
+         src="./assets/partners/img_21.png"
+         alt="partner 1"
+         class="max-w-[200px]"
+      >
+    </div>
+  </div>
+</div>
+
+<div class="mt-[450px] z-[5] relative max-md:mt-[100px] faq-section" id="faq">
+  <div class="container">
+    <div class="max-md:flex max-md:justify-center">
+      <p class="section-title !text-[#010101] min-w-[150px] w-max faq-title" data-key="faqTitle">FAQ</p>
+    </div>
+    <h2
+       class="text-[50px] text-[#010101] mt-[40px] max-md:text-[25px] max-md:text-center"
+       data-key="questionsAndAnswers"
+    >
+      Questions <span class="text-[#888888]">&</span> Answers
+    </h2>
+    <div class="flex items-center gap-[20px] mt-[60px] faq-buttons max-md:mt-[30px]" id="faqButtons">
+    </div>
+    <div class="mt-[50px] border-b-gray-400 border-b-[1px] max-md:mt-[30px] max-md:border-b-[transparent]">
+      <div class="faq-tab-content" id="faqContent">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-[60px] max-sm:mt-[20px]" id="contact-us">
+  <div class="container">
+    <div class="py-[60px] contact-section">
+      <div class="max-md:flex max-md:justify-center">
+        <p class="section-title min-w-[150px] w-max !text-[#010101]" data-key="contactUsTitle">Contact us</p>
+      </div>
+      <div class="mt-[40px] grid grid-cols-2 gap-[20px] max-md:grid-cols-1">
+        <div class="max-sm:flex max-sm:justify-center">
+          <h2
+             class="text-[60px] become-valued-partner max-w-[500px] max-lg:text-[40px] max-md:text-center max-md:max-w-full max-sm:text-[25px] max-sm:max-w-[200px]"
+             data-key="becomePartnerTitle">Become
+            a Valued Partner Today !</h2>
+        </div>
+        <div>
+          <p class="font-[500] text-[#888888] mb-[40px] max-md:text-center" data-key="joinUsText">Join us to streamline
+            your payment
+            process!</p>
+          <form id="contactForm">
+            <div class="grid grid-cols-2 gap-[30px] max-sm:grid-cols-1">
+              <input
+                 type="text"
+                 placeholder="Your name"
+                 class="contact-input fullName"
+                 data-key="yourNamePlaceholder"
+                 required
+              />
+              <input
+                 type="text"
+                 placeholder="Your phone"
+                 class="contact-input phoneNumber"
+                 data-key="yourPhonePlaceholder"
+                 required
+              />
+              <input
+                 type="text"
+                 placeholder="Your establishment"
+                 class="contact-input organization"
+                 data-key="yourEstablishmentPlaceholder"
+                 required
+              />
+              <input
+                 type="text"
+                 placeholder="Telegram link"
+                 class="contact-input telegramLink"
+                 data-key="telegramLinkPlaceholder"
+                 required
+              />
+            </div>
+            <div class="mt-[40px] flex items-center gap-[12px] max-sm:mt-[20px]">
+              <label class="checkbox" for="black">
+                <div>
+                  <input
+                     type="checkbox"
+                     name="color"
+                     id="black"
+                     class="checkboxBtn"
+                  >
+                  <span class="checkmark"></span>
+                </div>
+                <span class="pl-[8px]" data-key="termsAndConditionsText">
+                  You accept the <a href="#" class="underline" data-key="termsAndConditionsLink">Terms & Conditions</a> and <br/>
+                  <a href="#" class="underline" data-key="privacyPolicyLink">Privacy Policy</a> by submitting your request.
+                </span>
+              </label>
+            </div>
+            <a href="#contact-us">
+              <button
+                 class="btn dark big mt-[42px] max-sm:mt-[30px]"
+                 data-key="becomePartnerButton"
+                 id="submitBtn"
+              >
+                Become a partner
+              </button>
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="bg-[#F5F5F5] w-full text-center">
+    <div class="text-center bg-[#F5F5F5] p-[20px] inline-block">
+      <h3 class="font-[600] writing-effect max-md:hidden" data-key="footerSecurityText">
+        All transactions are secure and processed swiftly with RAHMAT's payment system.
+      </h3>
+      <h3 class="font-[600] hidden max-md:block" data-key="footerSecurityText">
+        All transactions are secure and processed swiftly with RAHMAT's payment system.
+      </h3>
+    </div>
+  </div>
+  <div class="container">
+    <div
+       class="relative py-[60px] border-b-[#D8D9D8] border-b-[1px] flex justify-between max-sm:flex-col max-sm:gap-[23px]">
+      <div class="flex justify-between flex-col">
+        <img src="./assets/logo.svg" alt="logo" class="w-[90px]"/>
+        <div class="max-sm:hidden">
+          <p class="text-[25px] text-[#010101] tracking-[-1px]" data-key="fastText">Fast.</p>
+          <p class="text-[25px] text-[#888888] tracking-[-1px]" data-key="noRegistrationsText">No registrations.</p>
+          <p class="text-[25px] text-[#888888] tracking-[-1px]" data-key="noAppsText">No apps. Instantly.</p>
+        </div>
+      </div>
+      <div
+         class="grid grid-cols-4 w-[70%] max-lg:grid-cols-2 max-[355px]:grid-cols-1 max-lg:gap-y-[10px] gap-y-[30px] max-[355px]:gap-[40px] max-sm:w-full">
+        <div>
+          <p class="font-[500] text-[#010101] mb-[20px]" data-key="companyTitle">Company</p>
+          <div class="grid gap-[12px]">
+            <a href="#how-it-works" class="text-[16px] text-[#010101] hover:underline w-max" data-key="howItWorksLink">How it
+              works</a>
+            <a href="#advantages" class="text-[16px] text-[#010101] hover:underline w-max"
+               data-key="advantagesLink">Advantages</a>
+            <a href="#pos-systems" class="text-[16px] text-[#010101] hover:underline w-max"
+               data-key="posSystemsLink">POS-Systems</a>
+            <a href="#partners" class="text-[16px] text-[#010101] hover:underline w-max" data-key="partnersLink">Partners</a>
+            <a href="#faq" class="text-[16px] text-[#010101] hover:underline w-max" data-key="faqLink">FAQ</a>
+          </div>
+        </div>
+        <div>
+          <p class="font-[500] text-[#010101] mb-[20px]" data-key="rahmatBusinessTitle">Rahmat business</p>
+          <div class="grid gap-[12px]">
+            <a href="#how-it-works" class="text-[16px] text-[#010101] hover:underline w-max" data-key="howItWorksLink2">How it
+              works</a>
+            <a href="#advantages" class="text-[16px] text-[#010101] hover:underline w-max"
+               data-key="advantagesLink2">Advantages</a>
+            <a href="#pos-systems" class="text-[16px] text-[#010101] hover:underline w-max"
+               data-key="posSystemsLink2">POS-Systems</a>
+          </div>
+        </div>
+        <div>
+          <p class="font-[500] text-[#010101] mb-[20px]" data-key="contactsTitle">Contacts</p>
+          <div class="grid gap-[12px]">
+            <a href="#" class="text-[16px] text-[#010101] flex items-center gap-[3px]">
+              <img src="./assets/icons/phone-icon.svg" alt="phone"/> <span>+998 55 506 01 01</span>
+            </a>
+            <a href="#" class="text-[16px] flex items-center gap-[3px]">
+              <img src="./assets/icons/telegram-icon.svg" alt="telegram"/>
+              <span class="text-[#F05039]" data-key="telegramLink">Telegram Bot</span>
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="font-[500] text-[#010101] mb-[20px]" data-key="socialsTitle">Socials</p>
+          <div class="flex items-center gap-[20px] header-social-links">
+            <div>
+              <button class="icon-btn white">
+                <img src="./assets/icons/facebook-icon.svg" alt="Facebook">
+              </button>
+            </div>
+            <div>
+              <button class="icon-btn white">
+                <img src="./assets/icons/twitter-icon.svg" alt="Twitter">
+              </button>
+            </div>
+            <div>
+              <button class="icon-btn white">
+                <img src="./assets/icons/instagram-icon.svg" alt="Instagram">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-[8px] explore-btn absolute right-[0] bottom-[60px]">
+        <span class="text-[16px] font-[500] max-sm:hidden" data-key="explore">To the top</span>
+        <button class="icon-btn scroll-down-button" id="toTopBtn">
+          <img src="./assets/icons/arrow-top-icon.svg" alt="Arrow Up">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3 class="font-[600] bg-[#F5F5F5 text-center p-[20px]" data-key="footerCopyright">
+      © 2024 Rahmatpay. All rights reserved.
+    </h3>
+  </div>
+</div>
+
+<script src="./scripts/multi-lang.js"></script>
+<script src="./scripts/send-contact.js"></script>
+<script src="./app.js"></script>
+<script src="./scripts/gsap.js"></script>
+<!--<script data-b24-form="inline/37/fui8yo" data-skip-moving="true">(function(w,d,u){var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/180000|0);var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);})(window,document,'https://crm.multibank.uz/upload/crm/form/loader_37_fui8yo.js');</script>-->
+</body>
+</html>

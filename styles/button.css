@@ -1,0 +1,179 @@
+.btn {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  padding: 0 14px;
+  border-radius: 50px;
+  transition: 0.3s ease;
+  min-width: 140px;
+  height: 32px;
+  background-color: #F05039;
+  border: 1px solid transparent;
+}
+
+.btn:active {
+  background-color: #C2260DFF;
+  transform: scale(.95) !important;
+}
+
+.btn:hover {
+  background-color: #e33215;
+}
+
+.btn.big {
+  min-width: 177px;
+  height: 40px;
+}
+
+.btn.dark {
+  background-color: #010101;
+}
+
+.btn.dark:active {
+  background-color: #3d3d3d;
+}
+
+.btn.dark:hover {
+  background-color: #2a2a2a;
+}
+
+.btn.disabled {
+  pointer-events: none;
+  opacity: .6;
+}
+
+.btn.white {
+  background-color: #FBFBFB;
+  border-color: #D8D9D8;
+  color: #000;
+}
+
+.btn.white:active {
+  background-color: #C0C0C0FF;
+}
+
+.btn.white:hover {
+  background-color: #D8D9D8;
+}
+
+/* Icon button */
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  width: 40px;
+  height: 40px;
+  background-color: #F05039;
+}
+
+.icon-btn.big {
+  width: 60px;
+  height: 60px;
+}
+
+.icon-btn:active {
+  background-color: #C2260DFF;
+  transform: scale(.95);
+}
+
+.icon-btn:hover {
+  background-color: #e33215;
+}
+
+.icon-btn.white {
+  background-color: #FBFBFB;
+  border-color: #D8D9D8;
+}
+
+.icon-btn.white:active {
+  background-color: #C0C0C0FF;
+}
+
+.icon-btn.white:hover {
+  background-color: #D8D9D8;
+}
+
+.icon {
+  font-size: 20px;
+  color: white;
+}
+
+.icon-btn.dark .icon {
+  color: #010101;
+}
+
+/* drop-down button styles */
+
+.dropdown-button {
+  display: flex;
+  align-items: center;
+  background-color: #FBFBFB;
+  border: 1px solid #D8D9D8;
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.dropdown-button:hover {
+  background-color: #D8D9D8;
+}
+
+.dropdown-button:active {
+  background-color: #C0C0C0FF;
+}
+
+.dropdown-button div {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 10px;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  border-radius: 8px;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  bottom: -120px;
+  transition: 0.3s ease;
+}
+
+.dropdown-button.active div {
+  bottom: -100px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-button div span {
+  font-size: 15px;
+  color: #2a2a2a;
+  transition: 0.3s ease;
+}
+
+.dropdown-button div span.active {
+  color: #F05039;
+}
+
+.dropdown-button div span:hover {
+  color: #F05039;
+}
+
+.chevron {
+  transition: transform 0.3s;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
