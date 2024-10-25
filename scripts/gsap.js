@@ -41,7 +41,7 @@ function starLoader() {
 
     counterElement.textContent = currentValue + "%";
 
-    let delay = Math.floor(Math.random() * 300) + 50;
+    let delay = Math.floor(Math.random()) + 5;
 
     setTimeout(updateCounter, delay);
   }
