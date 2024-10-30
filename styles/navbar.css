@@ -1,28 +1,68 @@
 .logo {
-  animation: popUp .8s ease;
+  animation: popUp 0.8s ease;
 }
-
+#navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+#dropdownMenu {
+  padding: 1rem;
+  margin-top: 0.4rem;
+  white-space: nowrap;
+  font-size: 18px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.9px);
+  -webkit-backdrop-filter: blur(6.9px);
+  border: 1px solid rgba(255, 255, 255, 0.97);
+  opacity: 0; /* Start fully transparent */
+  animation: fadeUp 0.2s ease forwards; /* Apply the fade-up animation */
+}
+.navbar {
+  background: rgba(255, 255, 255, 0);
+  border-radius: 16px;
+  box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.7px);
+  -webkit-backdrop-filter: blur(1.7px);
+  border: 1px solid rgba(224, 211, 211, 0.01);
+}
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px); /* Start 20px lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* End at original position */
+  }
+}
 .nav-buttons button:nth-child(1) {
   opacity: 0;
-  animation: popUp .8s ease forwards .1s;
+  animation: popUp 0.8s ease forwards 0.1s;
 }
-
+.proj {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
 .nav-buttons button:nth-child(2) {
-  transform: scale(.8);
+  transform: scale(0.8);
   opacity: 0;
-  animation: popUp .8s ease forwards .3s;
+  animation: popUp 0.8s ease forwards 0.3s;
 }
 
 .dropdown-button {
-  transform: scale(.8);
+  transform: scale(0.8);
   opacity: 0;
-  animation: popUp .8s ease forwards .4s;
+  animation: popUp 0.8s ease forwards 0.4s;
 }
 
 .burger-icon {
-  transform: scale(.8);
+  transform: scale(0.8);
   opacity: 0;
-  animation: popUp .8s ease forwards .5s;
+  animation: popUp 0.8s ease forwards 0.5s;
 }
 
 .nav-links a {
@@ -31,25 +71,25 @@
 }
 
 .nav-links li:nth-child(1) {
-  animation: slideIn .8s ease forwards .2s;
+  animation: slideIn 0.8s ease forwards 0.2s;
   transform: translateX(5%);
   opacity: 0;
 }
 
 .nav-links li:nth-child(2) {
-  animation: slideIn .8s ease forwards .3s;
+  animation: slideIn 0.8s ease forwards 0.3s;
   transform: translateX(5%);
   opacity: 0;
 }
 
 .nav-links li:nth-child(3) {
-  animation: slideIn .8s ease forwards .4s;
+  animation: slideIn 0.8s ease forwards 0.4s;
   transform: translateX(5%);
   opacity: 0;
 }
 
 .nav-links li:nth-child(4) {
-  animation: slideIn .8s ease forwards .5s;
+  animation: slideIn 0.8s ease forwards 0.5s;
   transform: translateX(5%);
   opacity: 0;
 }
@@ -59,7 +99,7 @@
 }
 
 .nav-links a:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 6px;
   left: -15px;
@@ -74,15 +114,15 @@
 }
 
 .nav-links a.active:after {
-  background-color: #F05039;
+  background-color: #f05039;
 }
 
 .nav-links a:hover:after {
-  background-color: #F05039;
+  background-color: #f05039;
 }
 
 .main-menu {
-  box-shadow: 0px 4px 10px 0px #0000001A;
+  box-shadow: 0px 4px 10px 0px #0000001a;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   background-color: rgba(255, 255, 255, 0.2);
@@ -122,46 +162,46 @@
 }
 
 .main-menu .pop-up-animation {
-  transform: scale(.7);
+  transform: scale(0.7);
   opacity: 0;
 }
 
 .main-menu.active .pop-up-animation {
-  animation: popUp .5s ease forwards 0.6s;
+  animation: popUp 0.5s ease forwards 0.6s;
 }
 
 .main-menu.active .question-links a {
-  transform: scale(.7);
+  transform: scale(0.7);
   opacity: 0;
 }
 
 .main-menu.active .question-links a:nth-child(1) {
-  animation: popUp .5s ease forwards 0.7s;
+  animation: popUp 0.5s ease forwards 0.7s;
 }
 
 .main-menu.active .question-links a:nth-child(2) {
-  animation: popUp .5s ease forwards 0.8s;
+  animation: popUp 0.5s ease forwards 0.8s;
 }
 
 .main-menu.active .question-links a:nth-child(3) {
-  animation: popUp .5s ease forwards 0.9s;
+  animation: popUp 0.5s ease forwards 0.9s;
 }
 
 .main-menu.active .social-links button {
-  transform: scale(.7);
+  transform: scale(0.7);
   opacity: 0;
 }
 
 .main-menu.active .social-links button:nth-child(1) {
-  animation: popUp .5s ease forwards 0.7s;
+  animation: popUp 0.5s ease forwards 0.7s;
 }
 
 .main-menu.active .social-links button:nth-child(2) {
-  animation: popUp .5s ease forwards 0.8s;
+  animation: popUp 0.5s ease forwards 0.8s;
 }
 
 .main-menu.active .social-links button:nth-child(3) {
-  animation: popUp .5s ease forwards 0.9s;
+  animation: popUp 0.5s ease forwards 0.9s;
 }
 
 .main-menu.active .menu-links a:nth-child(1) {
@@ -198,7 +238,7 @@
 @keyframes popUp {
   0% {
     opacity: 0;
-    transform: scale(.7);
+    transform: scale(0.7);
   }
   100% {
     opacity: 1;
@@ -211,7 +251,7 @@
 }
 
 .navbar.active {
-  background-color: rgba(255, 255, 255, 0.40);
+  background-color: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
   position: fixed;
   border-radius: 40px;

@@ -6,11 +6,28 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background-color: #f05039;
+  transform-origin: left;
+  z-index: 9999999999999;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .transition {
@@ -41,7 +58,7 @@ img {
   justify-content: center;
   height: 32px;
   border-radius: 50px;
-  border: 1px solid #D8D9D8;
+  border: 1px solid #d8d9d8;
 }
 
 #snackbar {
@@ -71,23 +88,47 @@ img {
 }
 
 @-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 .overlay {
@@ -102,7 +143,7 @@ img {
 .bar {
   width: 10vw;
   height: 105vh;
-  background-color: #F05039;
+  background-color: #f05039;
 }
 
 .counter {
@@ -116,7 +157,7 @@ img {
   color: #fff;
   padding: 0 2em 0 4em;
   font-size: 20vw;
-  font-family: 'Carpenter';
+  font-family: "Carpenter";
 }
 
 @media screen and (max-width: 768px) {
@@ -125,4 +166,44 @@ img {
     left: 20px;
     align-items: center;
   }
+}
+
+.video-container {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vid {
+  max-width: 50%;
+  max-height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.texts-for-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  padding: 2rem;
+
+  pointer-events: none;
+}
+
+/* WIll Change  */
+
+.phone-image,
+.img-payment,
+.illustration,
+.right-illustrator,
+.left-illustrator {
+  will-change: transform, opacity, top, left, right, bottom;
 }

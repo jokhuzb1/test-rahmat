@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/ScrollTrigger.min.js"></script>
+    <title>Video Transition with Steps</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #ffffff; /* Set background to white */
+        }
+        .video-section {
+            position: relative;
+            display: flex;
+            flex-direction: column; /* Stack the main video and thumbnails */
+            align-items: center; /* Center the main video */
+            height: 100vh; /* Full viewport height */
+        }
+        .main-video-container {
+            display: flex;
+            justify-content: center; /* Center the main video */
+            align-items: center; /* Center vertically */
+            width: 100%;
+            height: 50%; /* Main video occupies 50% of the height */
+            overflow: hidden; /* Prevent overflow */
+            position: relative;
+        }
+        .main-video {
+            width: 80%; /* Main video width set to 80% */
+            height: 100%; /* Full height of the main video container */
+            position: absolute;
+            top: 0; /* Align to top */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center it */
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.5s;
+            z-index: 1; /* On top of thumbnails */
+        }
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align thumbnails to the top */
+            height: 50%; /* Thumbnails occupy the remaining height */
+            margin-top: 1rem;
+            z-index: 0; /* Below the main video */
+        }
+        .thumbnail {
+            width: 15%; /* Thumbnail width set to 15% */
+            height: 100%; /* Full height of the thumbnail container */
+            margin: 0 0.5rem; /* Space between thumbnails */
+            opacity: 0.7; /* Semi-transparent */
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            cursor: pointer; /* Change cursor on hover */
+        }
+        .active {
+            opacity: 1; /* Fully visible */
+        }
+        .text-overlay {
+            position: absolute;
+            color: black; /* Change text color to black */
+            padding: 0.5rem; /* Padding for better visibility */
+            font-size: 1.125rem; /* Equivalent to text-lg */
+            z-index: 2; /* On top of videos */
+        }
+    </style>
+</head>
+<body>
+    <!-- Video section container -->
+    <div class="video-section">
+        <div class="main-video-container">
+            <video class="main-video" src="./assets/howitworks/1.mp4" autoplay muted ></video>
+            <video class="main-video" src="./assets/howitworks/2.mp4" autoplay muted ></video>
+            <video class="main-video" src="./assets/howitworks/3.mp4" autoplay muted ></video>
+            <video class="main-video" src="./assets/howitworks/4.mp4" autoplay muted ></video>
+            <video class="main-video" src="./assets/howitworks/5.mp4" autoplay muted ></video> <!-- New video added -->
+        </div>
+
+        <!-- Thumbnail container for small videos -->
+        <div class="thumbnail-container">
+            <video class="thumbnail" src="./assets/howitworks/1.mp4" muted ></video>
+            <video class="thumbnail" src="./assets/howitworks/2.mp4" muted ></video>
+            <video class="thumbnail" src="./assets/howitworks/3.mp4" muted ></video>
+            <video class="thumbnail" src="./assets/howitworks/4.mp4" muted ></video>
+            <video class="thumbnail" src="./assets/howitworks/5.mp4" muted ></video>
+        </div>
+
+        <!-- Text elements for each section positioned in the overlay -->
+        <div class="text-overlay" id="text-1">Scan QR-code</div>
+        <div class="text-overlay" id="text-2" style="display: none;">Section 2 - Top Left</div>
+        <div class="text-overlay" id="text-3" style="display: none;">Section 3 - Top Left</div>
+        <div class="text-overlay" id="text-4" style="display: none;">Section 4 - Top Left</div>
+        <div class="text-overlay" id="text-5" style="display: none;">Section 5 - Top Left</div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const mainVideos = document.querySelectorAll(".main-video");
+        const thumbnails = document.querySelectorAll(".thumbnail");
+        const textGroups = document.querySelectorAll(".text-overlay");
+        let currentIndex = 0;
+
+        // Set up ScrollTrigger for the video section
+        ScrollTrigger.create({
+            trigger: ".video-section",
+            start: "top top",
+            end: "+=5000", // Adjust based on the number of videos
+            pin: true,
+            scrub: true,
+            onUpdate: self => {
+                const scrollProgress = self.progress * mainVideos.length;
+                const newIndex = Math.floor(scrollProgress);
+
+                // Only update the video if we're at a new index
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    changeVideo(currentIndex);
+                }
+            }
+        });
+
+        // Function to change the active video and thumbnail sizes
+        function changeVideo(index) {
+            mainVideos.forEach((video, i) => {
+                if (i === index) {
+                    // Scale up the active video
+                    gsap.to(video, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                    video.play();
+
+                    // Show corresponding text
+                    textGroups.forEach(text => text.style.display = "none");
+                    textGroups[index].style.display = "block";
+                } else {
+                    // Scale down the inactive videos
+                    gsap.to(video, {
+                        opacity: 0,
+                        scale: 0.5,
+                        duration: 0.5,
+                        ease: "power2.out",
+                        onComplete: () => video.pause()
+                    });
+                }
+            });
+
+            thumbnails.forEach((thumb, i) => {
+                if (i === index) {
+                    gsap.to(thumb, {
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                } else {
+                    gsap.to(thumb, {
+                        scale: 0.5,
+                        opacity: 0.7,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        }
+
+        // Initialize the first video and text group
+        changeVideo(currentIndex);
+    </script>
+</body>
+</html>
